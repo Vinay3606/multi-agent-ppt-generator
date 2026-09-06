@@ -74,23 +74,24 @@ multi-agent-ppt-generator/
 💻 Installation
 
 
-git clone https://github.com/Vinay3606/multi-agent-ppt-generator.git
-cd multi-agent-ppt-generator
+- git clone https://github.com/Vinay3606/multi-agent-ppt-generator.git
+- cd multi-agent-ppt-generator
 
-python -m venv multienv
-multienv\Scripts\activate
+- python -m venv multienv
+- multienv\Scripts\activate
 
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
 
 ▶️ Run
 
+```text
 streamlit run streamlit_ui.py
-
+```
 
 👨‍💻 Author
 
 Vinay Choudhary
 
-🔗 LinkedIn: https://www.linkedin.com/in/vinay-choudhary-3a6286288
-💻 GitHub: https://github.com/Vinay3606
+- 🔗 LinkedIn: https://www.linkedin.com/in/vinay-choudhary-3a6286288
+- 💻 GitHub: https://github.com/Vinay3606
