@@ -1,0 +1,30 @@
+# Virtual Environment
+multienv/
+venv/
+env/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Environment Variables
+.env
+
+# Uploaded Files
+uploads/
+
+# Generated Output
+output/
+
+# FAISS / Vector Store
+*.faiss
+*.pkl
+*.joblib
+
+# IDE
+.vscode/
+.idea/
+
+# OS Files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,15 @@
+streamlit
+langgraph
+langchain
+langchain-community
+langchain-ollama
+python-docx
+python-pptx
+pypdf
+faiss-cpu
+sentence-transformers
+pandas
+numpy
+requests
+pillow
+duckduckgo-search
