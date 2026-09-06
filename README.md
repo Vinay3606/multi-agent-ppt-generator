@@ -40,7 +40,7 @@ An AI-powered Multi-Agent system that generates editable PowerPoint presentation
 
 🛠️ Tech Stack
 
-
+```text
 Python
 Streamlit
 FAISS
@@ -49,11 +49,12 @@ Hugging Face
 PyPDF
 python-pptx
 Scikit-learn
-
+```
 
 📁 Project Structure
 
 
+```text
 multi-agent-ppt-generator/
 │
 ├── agents/
@@ -68,6 +69,7 @@ multi-agent-ppt-generator/
 ├── requirements.txt
 └── README.md
 
+```
 
 💻 Installation
 
