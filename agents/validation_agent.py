@@ -1,4 +1,5 @@
 from langchain_ollama import ChatOllama
+import re
 
 
 llm = ChatOllama(
@@ -9,7 +10,6 @@ llm = ChatOllama(
 
 def validate_content(generated_content, retrieved_results):
 
-    # Original RAG context
     context = ""
 
     for i, item in enumerate(retrieved_results, start=1):
@@ -20,32 +20,72 @@ def validate_content(generated_content, retrieved_results):
 
 
     prompt = f"""
-You are a strict fact validation agent.
+You are a fact validation agent.
 
-Your task is to validate presentation content against the provided source information.
+Validate the presentation against the source information.
 
 SOURCE INFORMATION:
 {context}
 
-
-GENERATED PRESENTATION:
+PRESENTATION:
 {generated_content}
 
+RULES:
 
-STRICT RULES:
+1. Remove or correct unsupported factual claims only.
+2. Do not add new information.
+3. Preserve the EXACT output structure.
+4. Never remove SLIDE markers.
+5. Never remove TITLE:, SUBTITLE:, DESCRIPTION: labels.
+6. Never remove POINT X TITLE: labels.
+7. Never remove POINT X DESCRIPTION: labels.
+8. Return ONLY the presentation content.
+9. Do not add explanations before or after the presentation.
 
-1. Keep only statements supported by the source information.
-2. Remove unsupported claims.
-3. Remove invented benefits, statistics, achievements, or capabilities.
-4. Do not add new information.
-5. Do not rewrite or improve the content.
-6. Preserve the original slide structure as much as possible.
-7. If a bullet point is not supported, remove it.
-8. Return ONLY the validated presentation.
-
-Do not explain your decisions.
+The output must remain machine-readable in the same format.
 """
+
 
     response = llm.invoke(prompt)
 
-    return response.content
+    validated = response.content.strip()
+
+
+    # --------------------------------------------------
+    # SAFETY CHECK
+    # If validator destroys presentation structure,
+    # use original generated content instead.
+    # --------------------------------------------------
+
+    original_slides = len(
+        re.findall(
+            r"SLIDE\s+\d+",
+            generated_content,
+            re.IGNORECASE
+        )
+    )
+
+    validated_slides = len(
+        re.findall(
+            r"SLIDE\s+\d+",
+            validated,
+            re.IGNORECASE
+        )
+    )
+
+
+    # Structure damaged → fallback to original content
+    if (
+        validated_slides != original_slides
+        or "TITLE:" not in validated.upper()
+    ):
+
+        print(
+            "Validation changed structure. "
+            "Using original generated content."
+        )
+
+        return generated_content
+
+
+    return validated
